@@ -16,3 +16,10 @@ bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+DEFAULT CREDENTIAL:
+username: user1
+password: 123123123
+
+username: user2
+password: 123123123
