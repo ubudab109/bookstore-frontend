@@ -2,6 +2,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+Edit .env file. Change BACKEND_URL from this repository https://github.com/ubudab109/bookstore-backend
 First, run the development server:
 
 ```bash
