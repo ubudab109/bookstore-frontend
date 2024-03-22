@@ -142,8 +142,6 @@ const Home: React.FC = () => {
                 {
                     isLoading ? (
                         <div>Loading....</div>
-                    ) : isError ? (
-                        <div>{error.message}</div>
                     ) : data ? (
                         data.pages.map((page, pageIndex) => (
                             <React.Fragment key={pageIndex}>

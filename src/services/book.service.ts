@@ -3,7 +3,7 @@ import { ResponseInterface } from "@/interface/response.inteface";
 import axios, { AxiosResponse } from "axios";
 
 interface BookServiceFunction {
-  list: (keyword?: string, tags?: string[]) => Promise<ResponseInterface>;
+  list: (keyword?: string, tags?: string[], page?: number) => Promise<ResponseInterface>;
 }
 
 export function BookServices(): BookServiceFunction {
