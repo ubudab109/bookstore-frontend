@@ -119,7 +119,7 @@ const Cart: React.FC = () => {
                 await payOrder(parseInt(customerId), orderIds)
                     .then((res) => {
                         setIsLoading(false);
-                        alert('All order paid already');
+                        alert(res.message);
                         dispatch(setCustomerData({ orders: [], processOrderCount: 0 }))
                         setOrders([]);
                     })
