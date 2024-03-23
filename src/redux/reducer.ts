@@ -1,5 +1,6 @@
 import { InitialStateInterface } from "@/interface/initial_state.interface";
 import { SET_CUSTOMER_DATA, SET_LOGGED_IN } from "./action";
+import { SetCustomerDataAction, SetLoggedInAction } from "@/interface/redux.interface";
 
 const initialState: InitialStateInterface = {
     customer_data: {
@@ -13,7 +14,9 @@ const initialState: InitialStateInterface = {
     isLoggedIn: false,
 };
 
-const rootReducer = (state = initialState, action: { type: string; payload: any}) => {
+type ActionTypes = SetCustomerDataAction | SetLoggedInAction;
+
+const rootReducer = (state = initialState, action: ActionTypes) => {
     switch(action.type) {
         case SET_CUSTOMER_DATA:
             return {
