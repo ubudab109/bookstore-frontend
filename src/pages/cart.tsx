@@ -71,18 +71,19 @@ const Cart: React.FC = () => {
         orderId: number,
         item: CustomerOrderInterface,
         index: number,
-        quantity: number,
+        quantity?: number,
     ): Promise<void> => {
-        if (quantity !== null) {
+        if (quantity !== undefined && quantity !== null) {
+            let copyOrders = [...orders];
+            copyOrders[index].quantity = quantity;
+            if (item.book) {
+                copyOrders[index].total = item.book?.price * quantity;
+            }
+            setOrders(copyOrders);
+
             await editOrder(orderId, quantity)
                 .then((res) => {
                     if (res.success) {
-                        let copyOrders = [...orders];
-                        copyOrders[index].quantity = quantity;
-                        if (item.book) {
-                            copyOrders[index].total = item.book?.price * quantity;
-                        }
-                        setOrders(copyOrders);
                         if (orderSelectedState.orders) {
                             const updatedOrderSelectedState = { ...orderSelectedState };
                             if (updatedOrderSelectedState && updatedOrderSelectedState.orders) {
