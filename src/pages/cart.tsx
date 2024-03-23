@@ -120,8 +120,10 @@ const Cart: React.FC = () => {
                     .then((res) => {
                         setIsLoading(false);
                         alert(res.message);
-                        dispatch(setCustomerData({ orders: [], processOrderCount: 0 }))
-                        setOrders([]);
+                        if (res.success) {
+                            dispatch(setCustomerData({ orders: [], processOrderCount: 0 }))
+                            setOrders([]);
+                        }
                     })
             }
         }
