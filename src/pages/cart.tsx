@@ -73,35 +73,37 @@ const Cart: React.FC = () => {
         index: number,
         quantity: number,
     ): Promise<void> => {
-        await editOrder(orderId, quantity)
-            .then((res) => {
-                if (res.success) {
-                    let copyOrders = [...orders];
-                    copyOrders[index].quantity = quantity;
-                    if (item.book) {
-                        copyOrders[index].total = item.book?.price * quantity;
-                    }
-                    setOrders(copyOrders);
-                    if (orderSelectedState.orders) {
-                        const updatedOrderSelectedState = { ...orderSelectedState };
-                        if (updatedOrderSelectedState && updatedOrderSelectedState.orders) {
-                            const globalOrders = [...updatedOrderSelectedState.orders];
-                            const indexGlobalOrder = globalOrders.findIndex(item => item.id === res.data.id);
-                            if (indexGlobalOrder !== -1) {
-                                // Update existing order
-                                const updatedOrder = {
-                                    ...globalOrders[indexGlobalOrder],
-                                    quantity: res.data.quantity,
-                                    total: res.data.total
-                                };
-                                globalOrders[indexGlobalOrder] = updatedOrder;
+        if (quantity !== null) {
+            await editOrder(orderId, quantity)
+                .then((res) => {
+                    if (res.success) {
+                        let copyOrders = [...orders];
+                        copyOrders[index].quantity = quantity;
+                        if (item.book) {
+                            copyOrders[index].total = item.book?.price * quantity;
+                        }
+                        setOrders(copyOrders);
+                        if (orderSelectedState.orders) {
+                            const updatedOrderSelectedState = { ...orderSelectedState };
+                            if (updatedOrderSelectedState && updatedOrderSelectedState.orders) {
+                                const globalOrders = [...updatedOrderSelectedState.orders];
+                                const indexGlobalOrder = globalOrders.findIndex(item => item.id === res.data.id);
+                                if (indexGlobalOrder !== -1) {
+                                    // Update existing order
+                                    const updatedOrder = {
+                                        ...globalOrders[indexGlobalOrder],
+                                        quantity: res.data.quantity,
+                                        total: res.data.total
+                                    };
+                                    globalOrders[indexGlobalOrder] = updatedOrder;
+                                }
                             }
                         }
+                    } else {
+                        alert('Failed update existing order ' + res.message);
                     }
-                } else {
-                    alert('Failed update existing order ' + res.message);
-                }
-            })
+                });
+        }
     }
 
     const payAllOrder = async (): Promise<void> => {
