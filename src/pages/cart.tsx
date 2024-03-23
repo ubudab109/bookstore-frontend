@@ -128,6 +128,8 @@ const Cart: React.FC = () => {
                             }
                         }
                         setIsLoadingPay(false);
+                    }).catch((err) => {
+                        alert('There is something wrong. Please try again later');
                     });
             }
         }
