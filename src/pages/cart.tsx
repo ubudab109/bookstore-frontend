@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { CustomerDataInterface } from "@/interface/customer_data.interface";
 import { CustomerOrderInterface } from "@/interface/customer_order.interface";
 import { InitialStateInterface } from "@/interface/initial_state.interface";
 import { setCustomerData } from "@/redux/action";
@@ -19,7 +18,6 @@ const Cart: React.FC = () => {
     );
     const [loadingPay, setIsLoadingPay] = React.useState<boolean>(false);
     const dispatch = useDispatch();
-    const router = useRouter();
 
     const customerId = localStorage.getItem('customerId');
     const { getOrderCustomer, cancelOrder, payOrder, editOrder } = OrderServices();
@@ -97,7 +95,6 @@ const Cart: React.FC = () => {
                                     total: res.data.total
                                 };
                                 globalOrders[indexGlobalOrder] = updatedOrder;
-                                alert('Existing order updated successfully');
                             }
                         }
                     }
@@ -112,19 +109,26 @@ const Cart: React.FC = () => {
             setIsLoadingPay(true);
             const customerId = localStorage.getItem('customerId');
             let orderIds: Array<number> = [];
+            let total: number = orders.reduce((acc, order) => acc + order.total, 0);
             orders.forEach(item => {
                 orderIds.push(item.id);
             });
             if (customerId) {
                 await payOrder(parseInt(customerId), orderIds)
                     .then((res) => {
-                        setIsLoading(false);
                         alert(res.message);
                         if (res.success) {
-                            dispatch(setCustomerData({ orders: [], processOrderCount: 0 }))
-                            setOrders([]);
+                            if (orderSelectedState.points !== undefined) {
+                                dispatch(setCustomerData({
+                                    orders: [],
+                                    processOrderCount: 0,
+                                    points: orderSelectedState.points - total,
+                                }))
+                                setOrders([]);
+                            }
                         }
-                    })
+                        setIsLoadingPay(false);
+                    });
             }
         }
     }

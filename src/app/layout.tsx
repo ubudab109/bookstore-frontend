@@ -1,8 +1,8 @@
-import { Navbar, Nav, Button, Container, Modal, Form } from 'react-bootstrap';
+import { Navbar, Nav, Button, Container, Modal, Form, Row, Col } from 'react-bootstrap';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { InitialStateInterface } from '@/interface/initial_state.interface';
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import React, { ChangeEvent, FormEvent } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/assets/css/custom.css';
 import { LoginServices } from '@/services/login.service';
@@ -19,16 +19,19 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     (state: InitialStateInterface) => state.isLoggedIn
   );
   const cartTotal = useSelector(
-    (state: InitialStateInterface)  => state.customer_data.processOrderCount
+    (state: InitialStateInterface) => state.customer_data.processOrderCount
+  );
+  const points = useSelector(
+    (state: InitialStateInterface) => state.customer_data.points
   );
   const dispatch = useDispatch();
-  const [show, setShow] = useState<boolean>(false);
-  const [formLogin, setFormLogin] = useState<FormLoginRequest>({
+  const [show, setShow] = React.useState<boolean>(false);
+  const [formLogin, setFormLogin] = React.useState<FormLoginRequest>({
     username: '',
     password: '',
   });
-  const [validationMessages, setValidationMessages] = useState<Array<string>>([]);
-  const [isLoadingLogin, setIsLoadingLogin] = useState<boolean>(false);
+  const [validationMessages, setValidationMessages] = React.useState<Array<string>>([]);
+  const [isLoadingLogin, setIsLoadingLogin] = React.useState<boolean>(false);
 
   const handleClose = (): void => {
     setShow(false);
@@ -82,9 +85,14 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <Navbar.Collapse className="justify-content-end">
             {
               isLoggedIn ? (
-                <Nav>
-                  <Link href="/cart"><Cart /> <span>{cartTotal}</span></Link>
-                </Nav>
+                <Row>
+                  <Navbar.Text>
+                    Your Points: <a href="#login">{points}</a>
+                  </Navbar.Text>
+                  <Col className="">
+                    <Link href="/cart"><Cart /> <span>{cartTotal}</span></Link>
+                  </Col>
+                </Row>
               ) : (
                 <Nav>
                   <Button onClick={handleShow}>Login</Button>
