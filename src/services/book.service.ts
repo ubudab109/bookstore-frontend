@@ -31,7 +31,7 @@ export function BookServices(): BookServiceFunction {
         data: bookData,
       };
       return response;
-    } catch (error: any) {
+    } catch (error) {
       response = {
         success: false,
         message: "Internal server error",
