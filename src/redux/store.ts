@@ -29,7 +29,7 @@ const appStore = () => {
         }),
       devTools: process.env.NODE_ENV !== 'production'
         ? {
-          name: 'Your App Name', // Specify the name you want to appear in DevTools
+          name: 'Book Store', // Specify the name you want to appear in DevTools
           trace: true, // Enable state traces for better debugging
         }
         : false,

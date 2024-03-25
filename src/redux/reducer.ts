@@ -14,17 +14,17 @@ const initialState: InitialStateInterface = {
     isLoggedIn: false,
 };
 
-const rootReducer = (state = initialState, action: { type: string; payload: InitialStateInterface}) => {
+const rootReducer = (state = initialState, action: { type: string; payload: any}) => {
     switch(action.type) {
         case SET_CUSTOMER_DATA:
             return {
                 ...state,
-                customer_data: action.payload.customer_data,
+                customer_data: action.payload,
             }
         case SET_LOGGED_IN:
             return {
                 ...state,
-                isLoggedIn: action.payload.isLoggedIn,
+                isLoggedIn: action.payload,
             }
         default:
             return state;
